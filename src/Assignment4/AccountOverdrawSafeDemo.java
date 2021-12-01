@@ -27,10 +27,17 @@ public class AccountOverdrawSafeDemo implements Runnable {
 	private synchronized static void makeWithdrawal(int withdrawAmount) {
 		if (account.getBalance() >= withdrawAmount) {
 			System.out.println(Thread.currentThread().getName() + " is going to withdraw of rupee " + withdrawAmount);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			account.withdraw(withdrawAmount);
+			
 			System.out.println(Thread.currentThread().getName() + " completes the withdrawal of rupee " + withdrawAmount);
 		} else {
 			System.out.println("Not enough Amount for " + Thread.currentThread().getName() + " to withdraw !  Available Amount = " + account.getBalance());
 		}
 	}
 }
+
