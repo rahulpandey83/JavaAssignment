@@ -73,31 +73,39 @@ public class Employee implements EmployeeDetails{
 
 	@Override
 	public void searchEmployeeInFile(String fileName,String searchEmployee){
-		
-		 BufferedReader reader;
-	
+		Boolean found = false;
+		String  id = ""; String name = ""; String email = ""; String age = ""; String dob = "";
 		try {
-			 File file = new File(fileName);
-			reader = new BufferedReader(new FileReader(file));
-			while(reader.readLine() != null){
-	            String line = reader.readLine().toLowerCase().toString();
-	           // Collections.sort(list);
-	            if(line.contains(searchEmployee)){
-	            	System.out.println("Searched  is:");
-	                System.out.println("[ Employee id , Name , Email , Age ,Date of brith ] : " +line);
-	            }
-	         
-	        }
 			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.out.println("Searched  is:");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	          Scanner sc = new Scanner(new File(fileName));
+		      sc.useDelimiter("[,\n]");
+		      while(sc.hasNext() && !found)
+		      {
+		      id = sc.next();
+		      name = sc.next();
+		      email = sc.next();
+		      age = sc.next();
+		      dob = sc.next();
+		      if(id.equals(searchEmployee))
+		      {
+		      found = true; 
 		}
-	        
+		      }
+		  if (found )
+		  {
+			  System.out.println("employee " + id + name + email + age + dob );
+		  }
+		  else
+		  {
+			 System.out.println("not foound"); 
+		  }
+		}catch(Exception e)
+		{
+			System.out.println("Error");
+		}
+		      
 	    } 
+		      
 
 	@Override
 	public void deleteInformationInFile(ArrayList<String> list, String delete) {
