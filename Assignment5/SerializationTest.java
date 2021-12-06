@@ -8,41 +8,29 @@ import java.io.NotSerializableException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class SerializationTest {
 
-	public static void main(String[] args) throws IOException {
-
-		Address address1 = new Address("Mhow", "M.P.", 452001, "India");
-		Student student1 = new Student("Rahul", "24-JUN-1999", address1);
-
-		Address address2 = new Address("Indore", "M.P.", 452001, "India");
-		Student student2 = new Student("Nikhil", "24-aug-1999", address2);
-
-		Address address3 = new Address("Indore", "M.P.", 452001, "India");
-		Student student3 = new Student("Ojasvi", "06-jun-1999", address3);
-
-		Address address4 = new Address("Dewas", "M.P.", 455001, "India");
-		Student student4 = new Student("Supriya", "28-mar-1999", address4);
-
-		List<Student> list = new ArrayList<Student>();
-		list.add(student1);
-		list.add(student2);
-//		list.add(student3);
-//		list.add(student4);
+	public void serialiaztion1(Student student1) throws FileNotFoundException {
 
 		try {
-			FileOutputStream fileOutputStream = new FileOutputStream("student.txt", true);
+			FileOutputStream fileOutputStream1 = new FileOutputStream("output1.ser", true);
+
 			try {
-				ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-				for (Student Students : list)
-					try {
-						objectOutputStream.writeObject(list);
-						objectOutputStream.close();
-						System.out.println("Write succesfully");
-					} catch (NotSerializableException notserializableExcepton) {
-						notserializableExcepton.getMessage();
-					}
+				ObjectOutputStream objectOutputStream1 = new ObjectOutputStream(fileOutputStream1);
+
+				ArrayList<Student> list = new ArrayList<Student>();
+				list.add(student1);
+				try {
+					objectOutputStream1.writeObject(list);
+
+					objectOutputStream1.close();
+
+					System.out.println("Write succesfully");
+				} catch (NotSerializableException notserializableExcepton) {
+					notserializableExcepton.getMessage();
+				}
 			} catch (FileNotFoundException fileNotFoundException) {
 				fileNotFoundException.getMessage();
 			}
@@ -50,5 +38,32 @@ public class SerializationTest {
 			ioException.getMessage();
 
 		}
+	}
+
+	public void serialiaztion2(Student student2) throws FileNotFoundException {
+		try {
+
+			FileOutputStream fileOutputStream2 = new FileOutputStream("output2.ser", true);
+			try {
+
+				ObjectOutputStream objectOutputStream2 = new ObjectOutputStream(fileOutputStream2);
+				ArrayList<Student> list = new ArrayList<Student>();
+				list.add(student2);
+				try {
+
+					objectOutputStream2.writeObject(list);
+					objectOutputStream2.close();
+					System.out.println("Write succesfully");
+				} catch (NotSerializableException notserializableExcepton) {
+					notserializableExcepton.getMessage();
+				}
+			} catch (FileNotFoundException fileNotFoundException) {
+				fileNotFoundException.getMessage();
+			}
+		} catch (IOException ioException) {
+			ioException.getMessage();
+
+		}
+
 	}
 }
