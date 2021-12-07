@@ -32,8 +32,8 @@ public class Main {
 				firstName = sc.next();
 				System.out.println("Enter Date Of Birth : ");
 				dateOfBirth = sc.next();
-				SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
 				
+				SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
 				Date dob = dateFormat1.parse(dateOfBirth);
 			
 				System.out.println("Enter Address Of Student ");
@@ -45,6 +45,7 @@ public class Main {
 				pincode = sc.nextInt();
 				System.out.println("Enter country");
 				country = sc.next();
+				
 				Address address1 = new Address(city, state, pincode, country);
 				Student student1 = new Student(firstName, dob, address1);
 				SerializationTest serialize1 = new SerializationTest();
@@ -67,9 +68,9 @@ public class Main {
 				firstName = sc.next();
 				System.out.println("Enter Date Of Birth : ");
 				dateOfBirth = sc.next();
-				SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 				
-					Date dob2= dateFormat2.parse(dateOfBirth);
+				SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+				Date dob2= dateFormat2.parse(dateOfBirth);
 				
 			
 				System.out.println("Enter Address Of Student ");

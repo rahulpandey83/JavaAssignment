@@ -19,15 +19,14 @@ public class SerializationTest {
 
 			try {
 				ObjectOutputStream objectOutputStream1 = new ObjectOutputStream(fileOutputStream1);
-
-				ArrayList<Student> list = new ArrayList<Student>();
+                ArrayList<Student> list = new ArrayList<Student>();
 				list.add(student1);
 				try {
+
 					objectOutputStream1.writeObject(list);
-
 					objectOutputStream1.close();
-
 					System.out.println("Write succesfully");
+
 				} catch (NotSerializableException notserializableExcepton) {
 					notserializableExcepton.getMessage();
 				}
@@ -54,6 +53,7 @@ public class SerializationTest {
 					objectOutputStream2.writeObject(list);
 					objectOutputStream2.close();
 					System.out.println("Write succesfully");
+
 				} catch (NotSerializableException notserializableExcepton) {
 					notserializableExcepton.getMessage();
 				}
