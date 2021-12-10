@@ -2,11 +2,8 @@ package Assignment3;
 
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 public class ClassMain {
@@ -35,7 +32,6 @@ public class ClassMain {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		Scanner sc = new Scanner(System.in);
-		ArrayList<String> list = new ArrayList<String>();
 		do {
 			try {
 
@@ -50,21 +46,20 @@ public class ClassMain {
 				Employee employee = new Employee();
 				switch (choice) {
 				case 1:
-					String employeeId;
+					long employeeId=0;
 					String employeeName;
 					String employeeEmail;
 					String employeeAge;
 					String employeeDateOfBirth;
-
+		
 					System.out.println("Enter Employee Id:");
-					do {
-						employeeId = sc.next();
-						if (numberCheck(employeeId))
-							break;
-						else
-							System.out.println("Entered Invaild Id\t Enter only  Number");
-					} while (!numberCheck(employeeId));
-					employee.setEmployeeId(employeeId);
+						try {
+							employeeId = sc.nextLong();
+							employee.setEmployeeId(employeeId);
+						} catch (InputMismatchException e) {
+							System.out.println("Wrong Input!!!!");
+						}
+				
 
 					System.out.println("Enter Employee Name");
 					do {
@@ -105,9 +100,9 @@ public class ClassMain {
 						employee.setEmployeeDateOfBirth(employeeDateOfBirth);
 
 						new Employee(employeeName, employeeId, employeeEmail, employeeAge, employeeDateOfBirth);
-						//.add(employee.toString());
+
 						employee.addEmployeeDetailsInFile();
-                        
+
 					} catch (Exception e) {
 						System.out.println("Invalid Date Of Birth Format");
 					}
@@ -116,15 +111,15 @@ public class ClassMain {
 				case 2:
 					System.out.println("Enter Employee Id you Want to search ");
 					String search = sc.next();
-					employee.searchEmployeeInFile("emp.txt", search);
+					employee.searchEmployeeInFile("employee.txt", search);
 					break;
-					
+
 				case 3:
 					System.out.println("Enter Employee Id you Want to delete");
-					String delete = sc.next();
-					employee.deleteInformationInFile(list, delete);
+					Long delete = sc.nextLong();
+					employee.deleteInformationInFile(delete);
 					break;
-					
+
 				case 4:
 					System.exit(0);
 				default:

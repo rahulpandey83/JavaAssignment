@@ -1,17 +1,16 @@
 package Assignment3;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.*;
 
 public class Employee implements EmployeeDetails {
 
-	private String employeeId;
+	private Long employeeId;
 	private String employeeName;
 	private String employeeEmail;
 	private String employeeAge;
@@ -22,8 +21,7 @@ public class Employee implements EmployeeDetails {
 		super();
 	}
 
-	public Employee(String employeeName, String employeeId, String employeeEmail, String employeeAge,
-			String employeeDateOfBirth) {
+	public Employee(String employeeName, Long employeeId, String employeeEmail, String employeeAge,String employeeDateOfBirth) {
 		super();
 		this.employeeName = employeeName;
 		this.employeeId = employeeId;
@@ -32,11 +30,11 @@ public class Employee implements EmployeeDetails {
 		this.employeeDateOfBirth = employeeDateOfBirth;
 	}
 
-	public void setEmployeeId(String employeeId) {
+	public void setEmployeeId(Long employeeId) {
 		this.employeeId = employeeId;
 	}
 
-	public String getEmployeeId() {
+	public Long getEmployeeId() {
 		return employeeId;
 	}
 
@@ -80,18 +78,11 @@ public class Employee implements EmployeeDetails {
 
 	@Override
 	public void addEmployeeDetailsInFile() {
-//
-//		String employeeId = getEmployeeId();
-//		String employeeName = getEmployeeName();
-//		String employeeEmail = getEmployeeEmail();
-//		String employeeAge = getEmployeeAge();
-//		String employeeDateOfBirth = getEmployeeDateOfBirth();
-		 ArrayList<String> list = new ArrayList<String>();
-		 list.add(toString());
-	
-		try {
+		ArrayList<String> list = new ArrayList<String>();
+		list.add(toString());
 
-			BufferedWriter writer = new BufferedWriter(new FileWriter("emp.txt", true));
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("employee.txt", true));
 			Set<String> set = new HashSet<String>(list);
 			for (String lines : set) {
 				writer.write(lines);
@@ -127,8 +118,7 @@ public class Employee implements EmployeeDetails {
 				}
 			}
 			if (found) {
-				System.out.println(" [Employee] Id = " + id + " , Name = " + name + " , Email = " + email + " , Age = "
-						+ age + " , DoB = " + dob);
+				System.out.println(" [Employee] Id = " + id + " , Name = " + name + " , Email = " + email + " , Age = " + age + " , DoB = " + dob);
 			} else {
 				System.out.println("Employee Not Found !!");
 			}
@@ -139,51 +129,30 @@ public class Employee implements EmployeeDetails {
 	}
 
 	@Override
-	public void deleteInformationInFile(ArrayList<String> list, String delete) {
-		String id = "";
-		String name = "";
-		String email = "";
-		String age = "";
-		String dob = "";
-        String filePath = "emp.txt";
-		File NewFile = new File("empp.txt");
-		File oldFile = new File(filePath);
+	public void deleteInformationInFile(Long delete) {
+		File oldFile = new File("employee.txt");
+		File newFile = new File("temp.txt");
+		try (FileWriter fileWriter = new FileWriter(newFile);
+				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+				FileReader fileReader = new FileReader(oldFile);
+				BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
-		try {
-
-			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("empp.txt", true));
-			PrintWriter printWriter = new PrintWriter(bufferedWriter);
-			sc = new Scanner(new File(filePath));
-			sc.useDelimiter("[,\n]");
-
-			while (sc.hasNext()) {
-				id = sc.next();
-				name = sc.next();
-				email = sc.next();
-				age = sc.next();
-				dob = sc.next();
-				if (!id.equals(delete)) {
-					printWriter.println(id + "," + name + "," + email + "," + age + "," + dob);
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				if (line.contains(String.valueOf(delete))) {
+					continue;
+				} else {
+					bufferedWriter.write(line);
+					bufferedWriter.newLine();
 				}
 			}
-			
-				printWriter.flush();
-				printWriter.close();
-				oldFile.delete();
-				File dump = new File(filePath);
-				NewFile.renameTo(dump);
-			
+			oldFile.delete();
+			newFile.renameTo(oldFile);
 
-		} catch (FileNotFoundException e) {
-
-			e.printStackTrace();
 		} catch (IOException e) {
+			e.getMessage();
 
-			e.printStackTrace();
 		}
 
-		System.out.println("Employee Details deleted");
-
 	}
-
 }
